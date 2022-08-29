@@ -13,7 +13,7 @@ For example, today it is not possible for a native wallet such as MetaMask to ve
 
 ## Appbase Flow
 
-Obtaining the app certificate:
+### Obtaining the app certificate
 
 - App obtains a `nonce` from a trusted Rebase witness.
 - App generates an app attestation using Android or iOS services which incorporates the `nonce`.
@@ -38,7 +38,7 @@ sequenceDiagram
   app->>app: Store app certificate (app_certificate)
 ```
 
-Trusting the app:
+### Using the app certificate
 
 - Native app creates a JWT that includes the app certificate, a short expiration date, hash of the actualy request and a nonce, signed by the certified keypair.
 - Native app appends the JWT to a deep link, app linke or universal link as an additional parameter.
@@ -47,3 +47,21 @@ Trusting the app:
 - Target native app verifies the JWT by verifying the signature, the expiration date, the hash against the public key in the app certificate.
 - Target native app reads the bundle ID and can trust that the origin is what they say they are.
 
+```mermaid
+sequenceDiagram
+  participant user as User
+  participant app as App (Origin)
+  participant target as Target App
+
+  user->>app: Open App
+  app->>app: Generate and sign JWT <br/> (priv, exp, hash, app_certificate) : JWT
+  app->>app: Generate app link (JWT) <br/> : "some://appbase=<JWT>"
+  app-->>user: Show link
+  user->>app: Click on link
+  app->>target: open some://appbase=<JWT>
+  target--xapp: nop
+  target->>target: Verify appbase JWT
+  target->>target: Get bundle_id from JWT
+  Note over target: Target App can now trust App (Origin)  
+  target-->>user: ...
+```
