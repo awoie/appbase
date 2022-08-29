@@ -22,19 +22,10 @@ Obtaining the app certificate:
 - Witness provides the certificate to the app.
 - App stores the certificate.
 
-Trusting the app:
-
-- Native app creates a JWT that includes the app certificate, a short expiration date, hash of the actualy request and a nonce, signed by the certified keypair.
-- Native app appends the JWT to a deep link, app linke or universal link as an additional parameter.
-- Native app presents the deep link, universal link or app link, e.g., `some://request?appbase=<JWT>`
-- User clicks on the link which opens the target native app.
-- Target native app verifies the JWT by verifying the signature, the expiration date, the hash against the public key in the app certificate.
-- Target native app reads the bundle ID and can trust that the origin is what they say they are.
-
 ```mermaid
 sequenceDiagram
-  participant app
-  participant witness
+  participant app as App
+  participant witness as Rebase Witness
 
   app->>app: Generate key pair : (pub, priv)
   app->>witness: GET /nonce
@@ -46,3 +37,13 @@ sequenceDiagram
   witness-->>app: app_certificate
   app->>app: Store app certificate (app_certificate)
 ```
+
+Trusting the app:
+
+- Native app creates a JWT that includes the app certificate, a short expiration date, hash of the actualy request and a nonce, signed by the certified keypair.
+- Native app appends the JWT to a deep link, app linke or universal link as an additional parameter.
+- Native app presents the deep link, universal link or app link, e.g., `some://request?appbase=<JWT>`
+- User clicks on the link which opens the target native app.
+- Target native app verifies the JWT by verifying the signature, the expiration date, the hash against the public key in the app certificate.
+- Target native app reads the bundle ID and can trust that the origin is what they say they are.
+
