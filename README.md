@@ -9,7 +9,7 @@ It solves the following problems:
 
 This can be done through binding a private key, that is managed in the secure, non-exportable, tamper-proof key storage of the mobile platform, to an app attestation after a trusted witness verified the native app through Android Safetynet/Play Integrity and iOS DeviceCheck/App Attest Services. 
 
-For example, today it is not possible for a native wallet such as MetaMask to verify the app origin of a WalletConnect request.
+For example, today it is not possible for a native app wallet such as MetaMask to verify the native app origin of a WalletConnect request.
 
 ## Appbase Flow
 
