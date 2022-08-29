@@ -41,7 +41,7 @@ sequenceDiagram
 ### Using the app certificate
 
 - Native app creates a JWT that includes the app certificate, a short expiration date, hash of the actualy request and a nonce, signed by the certified keypair.
-- Native app appends the JWT to a deep link, app linke or universal link as an additional parameter.
+- Native app appends the JWT to a deep link, app link or universal link as an additional parameter.
 - Native app presents the deep link, universal link or app link, e.g., `some://request?appbase=<JWT>`
 - User clicks on the link which opens the target native app.
 - Target native app verifies the JWT by verifying the signature, the expiration date, the hash against the public key in the app certificate.
